@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import connectDB from './config/db.js';
+import apiRouter from './routes/apiRoutes.js';
 
 dotenv.config(); // Load env variables
 
@@ -18,6 +19,8 @@ app.use(cookieParser());
 app.get('/', (req, res) => {
   res.send('✅ Test from Hello World');
 });
+
+app.use("/api", apiRouter);
 
 // Start server
 const PORT = process.env.PORT || 8080;
