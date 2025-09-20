@@ -89,3 +89,8 @@ export const signin = asyncHandler(async (req, res) => {
     'Signin successful'
   ).send(res);
 });
+
+export const signout = asyncHandler(async (req, res) => {
+  clearAuthCookie(res);
+  return new ApiResponse(200, null, 'Signout successful').send(res);
+});
