@@ -1,9 +1,9 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-import connectDB from './config/db.js';
 import apiRouter from './routes/apiRoutes.js';
 import { globalErrorHandler } from './middlewares/error.middleware.js';
+import { config, connectDB } from './config/index.js';
 
 dotenv.config(); // Load env variables
 
@@ -25,8 +25,9 @@ app.use("/api", apiRouter);
 
 app.use(globalErrorHandler);
 
+const PORT = config.PORT;
+
 // Start server
-const PORT = process.env.PORT || 8080;
 
 const startServer = async () => {
   try {
