@@ -66,6 +66,13 @@ const userSchema = new mongoose.Schema(
         }
       },
     },
+
+    resumes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Resume',
+      },
+    ],
   },
   {
     timestamps: true,
