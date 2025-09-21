@@ -174,3 +174,13 @@ This gives us:
 ✅ User control (retry, bulk, model selection)
 
 The hybrid approach is production-ready and scales with your business growth! 🚀
+
+
+## Portfolio Preview enhancements
+```
+// Add these to the router
+portfolioRouter.get('/:portfolioId/preview', previewPortfolio); // Inline (dev)
+portfolioRouter.get('/:portfolioId/preview-production', previewPortfolioProduction); // Separate assets (prod)
+portfolioRouter.get('/:portfolioId/asset/:assetType', getPortfolioAsset); // Individual assets
+portfolioRouter.get('/:portfolioId/preview-info', getPreviewInfo); // Metadata
+```
