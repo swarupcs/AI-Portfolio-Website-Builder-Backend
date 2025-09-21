@@ -5,6 +5,7 @@ export const PORT = Number(process.env.PORT) || 5000;
 export const MONGO_URI = process.env.MONGO_URI;
 export const JWT_SECRET = process.env.JWT_SECRET;
 export const JWT_EXPIRE = process.env.JWT_EXPIRE || '7d';
+export const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
 export const CLOUDINARY = {
   cloudName: process.env.CLOUDINARY_CLOUD_NAME,
