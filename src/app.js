@@ -4,10 +4,17 @@ import cookieParser from 'cookie-parser';
 import apiRouter from './routes/apiRoutes.js';
 import { globalErrorHandler } from './middlewares/error.middleware.js';
 import { config, connectDB } from './config/index.js';
+import cors from 'cors';  
 
 dotenv.config(); // Load env variables
 
 const app = express();
+
+// ✅ CORS middleware
+app.use(cors({
+  origin: config.CLIENT_URL || "http://localhost:5173", // frontend URL (Vite/React by default)
+  credentials: true, // allow cookies and auth headers
+}));
 
 // Middleware to parse JSON requests
 app.use(express.json());
