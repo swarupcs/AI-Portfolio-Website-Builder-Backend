@@ -1,5 +1,5 @@
 import Queue from 'bull';
-import { portfolioService } from './portfolio.service.js';
+import { portfolioService } from './portfolio-generate.service.js';
 
 // Initialize Redis-based job queue
 const portfolioQueue = new Queue('portfolio generation', {

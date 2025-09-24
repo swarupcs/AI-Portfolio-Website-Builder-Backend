@@ -1,7 +1,8 @@
 import { Portfolio } from '../models/portfolio.model.js';
 import { Resume } from '../models/resume.model.js';
-import { aiService } from './ai.service.js';
-import { templateService } from './template.service.js';
+import { aiService } from './ai-content-generation.service.js';
+
+
 import { themeService } from './theme.service.js';
 
 // Get current processing step based on elapsed time

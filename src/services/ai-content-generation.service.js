@@ -1,27 +1,25 @@
-import OpenAI from 'openai';
+import Groq from 'groq-sdk';
+import { GROQ_API_KEY } from '../config/config.js';
 
-// Initialize OpenAI client
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
-// Configuration
-const AI_CONFIG = {
-  model: 'gpt-4o-mini', // Fast and cost-effective model
-  maxTokens: 2000,
-  temperature: 0.7,
-  timeout: 20000, // 20 second timeout
-};
-
+const groq = new Groq({ apiKey: GROQ_API_KEY });
+// Groq model options
+const GROQ_MODELS = {
+    fast: 'llama-3.1-8b-instant', // Fastest, good for simple parsing
+    balanced: 'llama-3.3-70b-versatile', // Best balance of speed/quality
+    detailed: 'llama-3.3-70b-versatile', // Most detailed (using same as balanced)
+  };
 // Generate portfolio content using AI
 export const generatePortfolioContent = async (prompt) => {
   try {
     console.log('🤖 Generating portfolio content with AI...');
 
+    // Select a model
+const selectedModel = GROQ_MODELS.balanced; // or fast / detailed
+
     const systemPrompt = `You are a professional portfolio website content generator. Generate high-quality, engaging, and professional content for portfolio websites. Always return valid JSON format with the exact structure requested. Be creative but professional, and tailor content to the specific role and experience level.`;
 
-    const completion = await openai.chat.completions.create({
-      model: AI_CONFIG.model,
+    const completion = await groq.chat.completions.create({
+      model: selectedModel,
       max_tokens: AI_CONFIG.maxTokens,
       temperature: AI_CONFIG.temperature,
       timeout: AI_CONFIG.timeout,
@@ -57,6 +55,11 @@ export const generatePortfolioContent = async (prompt) => {
 }`,
         },
       ],
+
+      temperature: 0.1, // Low temperature for consistent JSON output
+      max_tokens: 4000, // Adjust based on expected output size
+      top_p: 0.9,
+      stream: false,
     });
 
     const content = completion.choices[0]?.message?.content;
@@ -100,9 +103,11 @@ export const enhanceProject = async (prompt) => {
   try {
     console.log('🚀 Enhancing project with AI...');
 
+    const selectedModel = GROQ_MODELS.balanced;
+
     const systemPrompt = `You are a project enhancement specialist. Transform basic project information into compelling portfolio content. Focus on impact, technical achievements, and business value. Always return valid JSON format.`;
 
-    const completion = await openai.chat.completions.create({
+    const completion = await groq.chat.completions.create({
       model: AI_CONFIG.model,
       max_tokens: 1000,
       temperature: 0.6,
@@ -226,7 +231,9 @@ Generate a compelling professional summary (2-3 sentences) that highlights exper
 Return only the summary text, no JSON or formatting.
 `;
 
-    const completion = await openai.chat.completions.create({
+    const selectedModel = GROQ_MODELS.balanced; // or fast / detailed
+
+    const completion = await groq.chat.completions.create({
       model: AI_CONFIG.model,
       max_tokens: 200,
       temperature: 0.7,
@@ -278,7 +285,9 @@ Return as JSON:
 }
 `;
 
-    const completion = await openai.chat.completions.create({
+const selectedModel = GROQ_MODELS.balanced;
+
+    const completion = await groq.chat.completions.create({
       model: AI_CONFIG.model,
       max_tokens: 300,
       temperature: 0.5,
