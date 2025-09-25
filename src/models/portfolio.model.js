@@ -102,15 +102,13 @@ const portfolioSchema = new mongoose.Schema(
     template: {
       html: {
         type: String,
-        required: true,
+
       },
       css: {
         type: String,
-        required: true,
       },
       javascript: {
         type: String,
-        required: true,
       },
     },
 

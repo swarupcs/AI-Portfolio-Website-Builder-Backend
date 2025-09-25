@@ -60,7 +60,7 @@ export const createPortfolio = asyncHandler(async (req, res) => {
       portfolio_id: portfolio._id,
       status: portfolio.status,
       estimated_completion_time: '30-45 seconds',
-      status_check_url: `/api/portfolios/${portfolio._id}/status`,
+      status_check_url: `/api/portfolio/${portfolio._id}/status`,
     }).send(res);
   } catch (error) {
     console.error('Portfolio creation error:', error);
