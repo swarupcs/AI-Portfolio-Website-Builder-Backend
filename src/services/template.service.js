@@ -1,7 +1,7 @@
 import { themeService } from './theme.service.js';
 
 // Main template generation function
-export const generateTemplate = async (templateData) => {
+export const generateTemplateService = async (templateData) => {
   const { content, projects, structure, theme } = templateData;
 
   try {

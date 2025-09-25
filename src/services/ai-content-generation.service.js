@@ -8,6 +8,12 @@ const GROQ_MODELS = {
     balanced: 'llama-3.3-70b-versatile', // Best balance of speed/quality
     detailed: 'llama-3.3-70b-versatile', // Most detailed (using same as balanced)
   };
+
+  export const AI_CONFIG = {
+    maxTokens: 2000, // Maximum number of tokens in a response
+    temperature: 0.7, // Creativity / randomness (0 = deterministic, 1 = very creative)
+    timeout: 60000, // Timeout in milliseconds (e.g., 60 seconds)
+  };
 // Generate portfolio content using AI
 export const generatePortfolioContent = async (prompt) => {
   try {
@@ -22,7 +28,6 @@ const selectedModel = GROQ_MODELS.balanced; // or fast / detailed
       model: selectedModel,
       max_tokens: AI_CONFIG.maxTokens,
       temperature: AI_CONFIG.temperature,
-      timeout: AI_CONFIG.timeout,
       messages: [
         {
           role: 'system',
@@ -108,10 +113,9 @@ export const enhanceProject = async (prompt) => {
     const systemPrompt = `You are a project enhancement specialist. Transform basic project information into compelling portfolio content. Focus on impact, technical achievements, and business value. Always return valid JSON format.`;
 
     const completion = await groq.chat.completions.create({
-      model: AI_CONFIG.model,
+      model: selectedModel,
       max_tokens: 1000,
       temperature: 0.6,
-      timeout: AI_CONFIG.timeout,
       messages: [
         {
           role: 'system',
@@ -234,7 +238,7 @@ Return only the summary text, no JSON or formatting.
     const selectedModel = GROQ_MODELS.balanced; // or fast / detailed
 
     const completion = await groq.chat.completions.create({
-      model: AI_CONFIG.model,
+      model: selectedModel,
       max_tokens: 200,
       temperature: 0.7,
       messages: [
@@ -288,7 +292,7 @@ Return as JSON:
 const selectedModel = GROQ_MODELS.balanced;
 
     const completion = await groq.chat.completions.create({
-      model: AI_CONFIG.model,
+      model: selectedModel,
       max_tokens: 300,
       temperature: 0.5,
       messages: [

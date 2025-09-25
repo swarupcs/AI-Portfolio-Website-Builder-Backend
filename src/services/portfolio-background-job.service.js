@@ -6,7 +6,7 @@ const portfolioQueue = new Queue('portfolio generation', {
   redis: {
     host: process.env.REDIS_HOST || 'localhost',
     port: process.env.REDIS_PORT || 6379,
-    password: process.env.REDIS_PASSWORD || undefined,
+    password: process.env.REDIS_PASSWORD || "redispass",
   },
   defaultJobOptions: {
     attempts: 3,
@@ -19,6 +19,37 @@ const portfolioQueue = new Queue('portfolio generation', {
   },
 });
 
+
+// For testing the queue and redis
+
+// ✅ Queue connection events
+portfolioQueue.on('ready', () => {
+  console.log('✅ Queue is ready and connected to Redis');
+});
+
+portfolioQueue.on('error', (err) => {
+  console.error('❌ Queue connection error:', err);
+});
+
+// ✅ Job lifecycle events
+portfolioQueue.on('waiting', (jobId) => {
+  console.log(`⏳ Job ${jobId} is waiting`);
+});
+
+portfolioQueue.on('active', (job) => {
+  console.log(`🚀 Job ${job.id} is active`);
+});
+
+portfolioQueue.on('completed', (job, result) => {
+  console.log(`✅ Job ${job.id} completed with result:`, result);
+});
+
+portfolioQueue.on('failed', (job, err) => {
+  console.error(`❌ Job ${job.id} failed:`, err);
+});
+
+
+
 // Queue portfolio generation job
 export const queuePortfolioGeneration = async (
   portfolioId,
@@ -30,6 +61,11 @@ export const queuePortfolioGeneration = async (
       isRegeneration,
       queuedAt: new Date(),
     };
+
+    console.log("jobData", jobData);
+    console.log(
+      `Queueing portfolio generation job for portfolio ${portfolioId}`
+    );
 
     const jobOptions = {
       delay: 0, // Start immediately

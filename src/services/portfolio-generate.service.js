@@ -1,6 +1,7 @@
 import { Portfolio } from '../models/portfolio.model.js';
 import { Resume } from '../models/resume.model.js';
 import { aiService } from './ai-content-generation.service.js';
+import { generateTemplateService } from './template.service.js';
 
 
 import { themeService } from './theme.service.js';
@@ -274,7 +275,7 @@ const generateTemplate = async (
   structure,
   theme
 ) => {
-  return templateService.generateTemplate({
+  return generateTemplateService({
     content,
     projects: enhancedProjects,
     structure,
